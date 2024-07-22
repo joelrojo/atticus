@@ -1,9 +1,8 @@
 class PlaylistsController < ApplicationController
   before_action :set_playlist, only: [:show, :update, :destroy, :play, :add_song, :remove_song]
-  before_action :authorize_user!, only: [:update, :destroy, :add_song, :remove_song]
 
   def index
-    @playlists = current_user.playlists
+    @playlists = Playlist.all # Adjusted to get all playlists since we're not using current_user
     render :index, formats: :json
   end
 
@@ -12,7 +11,10 @@ class PlaylistsController < ApplicationController
   end
 
   def create
-    @playlist = current_user.playlists.new(playlist_params)
+    # Assign to a default user for now, replace with appropriate user logic
+    @playlist = Playlist.new(playlist_params)
+    @playlist.user = User.first || User.create!(email: 'default@example.com', password: 'password')
+
     if @playlist.save
       render :show, status: :created, formats: :json
     else
@@ -54,7 +56,6 @@ class PlaylistsController < ApplicationController
   end
 
   def play
-    # Return a list of songs in the playlist with their titles and mp3_urls
     songs = @playlist.songs.select(:id, :title, :mp3_url)
     render json: { message: "Playing playlist: #{@playlist.name}", songs: songs }, status: :ok
   end
@@ -63,10 +64,6 @@ class PlaylistsController < ApplicationController
 
   def set_playlist
     @playlist = Playlist.find(params[:id])
-  end
-
-  def authorize_user!
-    render json: { error: 'Unauthorized' }, status: :unauthorized unless @playlist.user == current_user
   end
 
   def playlist_params
