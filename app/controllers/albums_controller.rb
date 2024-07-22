@@ -1,5 +1,5 @@
 class AlbumsController < ApplicationController
-  before_action :set_album, only: [:show]
+  before_action :set_album, only: [:show, :update, :destroy, :play]
 
   def index
     @albums = Album.all
@@ -39,7 +39,6 @@ class AlbumsController < ApplicationController
   end
 
   def play
-    # Return a list of songs in the album with their titles and mp3_urls
     songs = @album.songs.select(:id, :title, :mp3_url)
     render json: { message: "Playing album: #{@album.title}", songs: songs }, status: :ok
   end
