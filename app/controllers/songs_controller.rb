@@ -2,7 +2,12 @@ class SongsController < ApplicationController
   before_action :set_song, only: [:show, :play, :destroy]
 
   def index
-    @songs = Song.all
+    # Pagination logic would apply to other models as well
+    page = params[:page].to_i > 0 ? params[:page].to_i : 1
+    per_page = params[:per_page].to_i > 0 ? params[:per_page].to_i : 10
+    offset = (page - 1) * per_page
+
+    @songs = Song.limit(per_page).offset(offset)
 
     if params[:genre_id]
       @songs = @songs.where(genre_id: params[:genre_id])
