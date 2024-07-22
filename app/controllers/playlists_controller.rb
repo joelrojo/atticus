@@ -55,8 +55,9 @@ class PlaylistsController < ApplicationController
   end
 
   def play
-    # logic to play the playlist
-    render json: { message: "Playing playlist #{@playlist.name}" }
+    # Return a list of songs in the playlist with their titles and mp3_urls
+    songs = @playlist.songs.select(:id, :title, :mp3_url)
+    render json: { message: "Playing playlist: #{@playlist.name}", songs: songs }, status: :ok
   end
 
   private

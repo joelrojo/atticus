@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :update, :destroy]
   resources :artists, only: [:index, :show]
   resources :genres, only: [:index, :show]
-  resources :albums, only: [:index, :show]
+  resources :albums, only: [:index, :show] do
+    member do
+      post :play
+    end
+  end
   resources :songs, only: [:index, :show, :create, :destroy] do
     member do
       post :play

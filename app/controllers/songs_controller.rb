@@ -19,9 +19,9 @@ class SongsController < ApplicationController
     end
   end
 
+  # !! might not need this since you can get mp3_url from show endpoint
   def play
-    # logic to play the song
-    render json: { message: "Playing song #{@song.title}" }
+    render json: { message: "Playing song: #{@song.title}", mp3_url: @song.mp3_url }, status: :ok
   end
 
   # !! might not be needed since users can't delete songs

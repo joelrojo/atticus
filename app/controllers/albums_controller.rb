@@ -10,6 +10,12 @@ class AlbumsController < ApplicationController
     render :show, formats: :json
   end
 
+  def play
+    # Return a list of songs in the album with their titles and mp3_urls
+    songs = @album.songs.select(:id, :title, :mp3_url)
+    render json: { message: "Playing album: #{@album.title}", songs: songs }, status: :ok
+  end
+
   private
 
   def set_album
