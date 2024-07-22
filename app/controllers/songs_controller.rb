@@ -3,6 +3,15 @@ class SongsController < ApplicationController
 
   def index
     @songs = Song.all
+
+    if params[:genre_id]
+      @songs = @songs.where(genre_id: params[:genre_id])
+    elsif params[:artist_id]
+      @songs = @songs.where(artist_id: params[:artist_id])
+    elsif params[:album_id]
+      @songs = @songs.where(album_id: params[:album_id])
+    end
+    
     render :index, formats: :json
   end
 
