@@ -1,5 +1,4 @@
 class PlaylistsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_playlist, only: [:show, :update, :destroy, :play, :add_song, :remove_song]
   before_action :authorize_user!, only: [:update, :destroy, :add_song, :remove_song]
 
