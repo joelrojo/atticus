@@ -3,6 +3,8 @@ class Album < ApplicationRecord
   belongs_to :genre
   has_many :songs
 
+  has_one_attached :image
+
   before_save :generate_slug
 
   validates :title, presence: true
