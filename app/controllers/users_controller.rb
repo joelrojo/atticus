@@ -5,18 +5,18 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
-    render json: @users
+    render :index, formats: :json
   end
 
   # GET /users/:id
   def show
-    render json: @user
+    render :show, formats: :json
   end
 
   # PATCH/PUT /users/:id
   def update
     if @user.update(user_params)
-      render json: @user
+      render :show, formats: :json
     else
       render json: @user.errors, status: :unprocessable_entity
     end
