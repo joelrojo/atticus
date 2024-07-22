@@ -62,6 +62,10 @@ The API will be accessible at http://localhost:3000.
 ### PlaylistSong (Join Table)
 - Attributes: playlist_id, song_id
 
+## ERD diagram
+
+Located under the `docs` folder
+
 ## API Routes
 
 ### Users
